@@ -14,8 +14,10 @@ namespace FiguryLibrary
             {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("wartość A musi byc dodatnia");
-                else
+                else if (isSpelnionyWarunekTrojkata(value, b, c))
                     a = value;
+                else // nie jest spełniony warunek trójkata
+                    throw new ArgumentException("Nie spełniony warunek trójkąta przy próbie zmiany A!");
             }
         }
                 
@@ -27,8 +29,10 @@ namespace FiguryLibrary
             {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("wartość B musi byc dodatnia");
-                else
+                else if(isSpelnionyWarunekTrojkata(a, value, c))
                     b = value;
+                else // nie jest spełniony warunek trójkata
+                    throw new ArgumentException("Nie spełniony warunek trójkąta przy próbie zmiany B!");
             }
         }
         
@@ -40,12 +44,25 @@ namespace FiguryLibrary
             {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("wartość C musi byc dodatnia");
-                else
+                else if (isSpelnionyWarunekTrojkata(a, b, value))
                     c = value;
+                else // nie jest spełniony warunek trójkata
+                    throw new ArgumentException("Nie spełniony warunek trójkąta przy próbie zmiany C!");
             }
         }
 
-                     
+        private bool isSpelnionyWarunekTrojkata(double a, double b, double c)
+        {
+            if (a + b <= c || a + c <= b || b + c <= a)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+                             
         // opisanie procesu budowy projektu / konstruktory
         public Trojkat()  // konstruktor domyśly, default
         {
@@ -54,13 +71,15 @@ namespace FiguryLibrary
 
         public Trojkat(double a, double b, double c)
         {
-            if (a + b <= c || a + c <= b || b + c <= a)
-            {
-                throw new AggregateException("Nie spełniony warunek trójkąta");
-            }
-            this.A = a;
-            this.B = b;
-            this.C = c;
+            if (a <= 0 || b <= 0 || c <= 0)
+                throw new ArgumentOutOfRangeException("Boki muszą być dodatnie");
+
+            if (!isSpelnionyWarunekTrojkata(a, b, c))
+                throw new ArgumentException("Nie spełniony warunek trójkąta");
+
+            this.a = a;
+            this.b = b;
+            this.c = c;
         }
         // tekstowa reprezentacja obiektu
         public override string ToString()

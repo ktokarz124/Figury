@@ -33,11 +33,11 @@ namespace ConsoleAppFigury
             Console.WriteLine(t1.Pole);
 
             Console.WriteLine("==========================");
-            var t2 = new Trojkat(1, 1, 5);
+            var t2 = new Trojkat(3, 4, 5);
             Console.WriteLine(t2);
-
-        }
-
-            
+            Console.WriteLine(t2.A);
+            t2.B = 100;
+            Console.WriteLine(t2);
+        }                    
     }
 }
